@@ -1,13 +1,34 @@
 angular.module('video-player')
 
-.component('app', { 
-  controller: function () {
-    this.videos = window.exampleVideoData;
+.controller('app-controller', function($window) {
+  this.selectVideo = function(video) {
+    this.currentVideo = video;
+  }.bind(this);
+
+  this.updateVideos = (videos) => {
+    this.videos = videos;
     this.currentVideo = this.videos[0];
+  }
 
-    this.selectVideo = function () {};
-  },
+  this.updateVideos($window.exampleVideoData);
 
+  /* 
+    alternatively, you can use arrow functions:
+
+    this.selectVideo = (video) => {}
+
+
+    or can use closure variable:
+
+    var vm = this;
+    this.selectVideo = function(video) {
+      vm.currentVidedo = video;
+    }
+  */
+})
+
+.component('app', { 
+  controller: 'app-controller',
   bindings: {},
   templateUrl: 'src/templates/app.html'
 });
